@@ -9,60 +9,105 @@
 <body>
     <div class="app">
         <header>
-            <h1>📧 Общая почта</h1>
+            <div class="logo">
+                <span class="logo-icon">📧</span>
+                <h1>Общая почта</h1>
+            </div>
             <div class="user-info">
-                <span id="currentUser">Загрузка...</span>
-                <button id="logoutBtn" class="btn-small hidden">Выйти</button>
+                <img id="userAvatar" class="avatar" alt="">
+                <div class="user-details">
+                    <span id="currentUser">Загрузка...</span>
+                    <span id="userEmail" class="user-email"></span>
+                </div>
+                <button id="logoutBtn" class="btn-icon hidden" title="Выйти">⎋</button>
             </div>
         </header>
 
         <div id="authScreen" class="auth-screen">
-            <h2>Вход</h2>
-            <p class="auth-hint">Войдите, чтобы читать и писать письма</p>
-            <button id="googleLoginBtn" class="btn btn-google">
-                <span>🔵</span> Войти через Google
-            </button>
-            <button id="anonLoginBtn" class="btn btn-secondary">
-                👤 Войти анонимно
-            </button>
+            <div class="auth-card">
+                <div class="auth-logo">📧</div>
+                <h2>Общая почта</h2>
+                <p class="auth-hint">Войдите, чтобы читать и писать письма всем участникам</p>
+                <button id="googleLoginBtn" class="btn btn-google">
+                    <svg width="18" height="18" viewBox="0 0 18 18">
+                        <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 01-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/>
+                        <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z"/>
+                        <path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/>
+                        <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/>
+                    </svg>
+                    Войти через Google
+                </button>
+                <button id="anonLoginBtn" class="btn btn-secondary">
+                    👤 Войти анонимно
+                </button>
+            </div>
         </div>
 
         <main id="mailScreen" class="mail-screen hidden">
             <aside class="sidebar">
-                <button class="btn" id="composeBtn">✏️ Написать</button>
+                <button class="btn btn-compose" id="composeBtn">
+                    <span>✏️</span> Написать
+                </button>
                 <nav>
-                    <a href="#" data-folder="inbox" class="active">📥 Входящие</a>
-                    <a href="#" data-folder="sent">📤 Отправленные</a>
-                    <a href="#" data-folder="all">📬 Все</a>
+                    <a href="#" data-folder="inbox" class="active">
+                        <span>📥</span> Входящие
+                        <span class="badge hidden" id="inboxBadge">0</span>
+                    </a>
+                    <a href="#" data-folder="sent">
+                        <span>📤</span> Отправленные
+                    </a>
+                    <a href="#" data-folder="all">
+                        <span>📬</span> Все
+                    </a>
                 </nav>
             </aside>
 
             <section class="content">
-                <h2 id="folderTitle">Входящие</h2>
+                <div class="content-header">
+                    <h2 id="folderTitle">Входящие</h2>
+                    <input type="search" id="searchInput" placeholder="🔍 Поиск...">
+                </div>
                 <ul id="mailList" class="mail-list"></ul>
             </section>
         </main>
 
         <div id="composeModal" class="modal hidden">
             <div class="modal-content">
-                <h3>Новое письмо</h3>
-                <input type="text" id="mailTo" placeholder="Кому (имя или 'all')">
-                <input type="text" id="mailSubject" placeholder="Тема">
-                <textarea id="mailBody" placeholder="Текст письма" rows="8"></textarea>
+                <div class="modal-header">
+                    <h3>✏️ Новое письмо</h3>
+                    <button class="btn-icon close-btn" data-close="composeModal">✕</button>
+                </div>
+                <label class="field-label">Кому</label>
+                <input type="text" id="mailTo" placeholder="Имя пользователя или 'all'" list="usersList">
+                <datalist id="usersList"></datalist>
+                <label class="field-label">Тема</label>
+                <input type="text" id="mailSubject" placeholder="О чём письмо?">
+                <label class="field-label">Текст</label>
+                <textarea id="mailBody" placeholder="Напишите что-нибудь..." rows="8"></textarea>
                 <div class="modal-actions">
-                    <button id="sendBtn" class="btn">Отправить</button>
                     <button id="cancelBtn" class="btn-secondary">Отмена</button>
+                    <button id="sendBtn" class="btn">Отправить ➤</button>
                 </div>
             </div>
         </div>
 
         <div id="viewModal" class="modal hidden">
             <div class="modal-content">
-                <h3 id="viewSubject"></h3>
-                <p class="view-meta" id="viewMeta"></p>
+                <div class="modal-header">
+                    <h3 id="viewSubject"></h3>
+                    <button class="btn-icon close-btn" data-close="viewModal">✕</button>
+                </div>
+                <div class="view-meta">
+                    <img id="viewAvatar" class="avatar" alt="">
+                    <div>
+                        <div id="viewFrom" class="view-from"></div>
+                        <div id="viewMeta" class="view-date"></div>
+                    </div>
+                </div>
                 <div class="view-body" id="viewBody"></div>
                 <div class="modal-actions">
-                    <button id="closeViewBtn" class="btn-secondary">Закрыть</button>
+                    <button id="replyBtn" class="btn-secondary">↩ Ответить</button>
+                    <button id="closeViewBtn" class="btn">Закрыть</button>
                 </div>
             </div>
         </div>
