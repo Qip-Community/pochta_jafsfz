@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Общая почта</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app">
+        <header>
+            <h1>📧 Общая почта</h1>
+            <div class="user-info">
+                <span id="currentUser">Загрузка...</span>
+                <button id="logoutBtn" class="btn-small hidden">Выйти</button>
+            </div>
+        </header>
+
+        <div id="authScreen" class="auth-screen">
+            <h2>Вход</h2>
+            <p class="auth-hint">Войдите, чтобы читать и писать письма</p>
+            <button id="googleLoginBtn" class="btn btn-google">
+                <span>🔵</span> Войти через Google
+            </button>
+            <button id="anonLoginBtn" class="btn btn-secondary">
+                👤 Войти анонимно
+            </button>
+        </div>
+
+        <main id="mailScreen" class="mail-screen hidden">
+            <aside class="sidebar">
+                <button class="btn" id="composeBtn">✏️ Написать</button>
+                <nav>
+                    <a href="#" data-folder="inbox" class="active">📥 Входящие</a>
+                    <a href="#" data-folder="sent">📤 Отправленные</a>
+                    <a href="#" data-folder="all">📬 Все</a>
+                </nav>
+            </aside>
+
+            <section class="content">
+                <h2 id="folderTitle">Входящие</h2>
+                <ul id="mailList" class="mail-list"></ul>
+            </section>
+        </main>
+
+        <div id="composeModal" class="modal hidden">
+            <div class="modal-content">
+                <h3>Новое письмо</h3>
+                <input type="text" id="mailTo" placeholder="Кому (имя или 'all')">
+                <input type="text" id="mailSubject" placeholder="Тема">
+                <textarea id="mailBody" placeholder="Текст письма" rows="8"></textarea>
+                <div class="modal-actions">
+                    <button id="sendBtn" class="btn">Отправить</button>
+                    <button id="cancelBtn" class="btn-secondary">Отмена</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="viewModal" class="modal hidden">
+            <div class="modal-content">
+                <h3 id="viewSubject"></h3>
+                <p class="view-meta" id="viewMeta"></p>
+                <div class="view-body" id="viewBody"></div>
+                <div class="modal-actions">
+                    <button id="closeViewBtn" class="btn-secondary">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
